@@ -1,0 +1,50 @@
+.experienciaList {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.experienciaItem {
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.experienciaItem p {
+  margin: 5px 0;
+}
+
+.btnDelete, .btnEdit {
+  margin-right: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btnDelete {
+  background-color: #e74c3c;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.btnDelete:hover {
+  background-color: #c0392b;
+}
+
+.btnEdit {
+  background-color: #3498db;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.btnEdit:hover {
+  background-color: #2980b9;
+}

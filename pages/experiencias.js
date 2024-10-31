@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import ExperienciaList from '../components/ExperienciaList';
 import ExperienciaForm from '../components/ExperienciaForm';
+import styles from './experiencias.module.css'; // Importar el fitxer CSS Module
 
 export default function Experiencias() {
   const [experiencias, setExperiencias] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const URL = "http://localhost:3000/api/experiencias"
+  const [isCreating, setIsCreating] = useState(false);
+  const URL = "http://localhost:3000/api/experiencias";
+
   useEffect(() => {
     setLoading(true);
     const fetchExperiencias = async () => {
@@ -25,55 +28,67 @@ export default function Experiencias() {
   }, []);
 
   const handleExperienciaSubmit = async (newExperiencia) => {
-    //Crear experiencia
     try {
-        const response = await fetch(URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newExperiencia),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Error al crear la experiencia');
-        }
-  
-        const data = await response.json();
-        setExperiencias([...experiencias, data]); // Actualiza la lista de experiencias
-      } catch (err) {
-        console.error(err.message);
-      }
+      const response = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newExperiencia),
+      });
+      const data = await response.json();
+      setExperiencias([...experiencias, data]);
+      setIsCreating(false); // Tancar el formulari després de crear l'experiència
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const handleDeleteExperience = async (expId) => {
-    // Eliminar experiencia
+  const handleDeleteExperience = async (id) => {
     try {
-        const response = await fetch(`http://localhost:3000/api/experiencias/${expId}`, {
-          method: 'DELETE',
-        });
-  
-        if (!response.ok) {
-          throw new Error('Error al eliminar la experiencia');
-        }
-  
-        setExperiencias(experiencias.filter(exp => exp._id !== expId)); // Actualiza la lista
-      } catch (err) {
-        console.error(err);
-      }
+      await fetch(`${URL}/${id}`, {
+        method: 'DELETE',
+      });
+      setExperiencias(experiencias.filter(exp => exp._id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
   };
+
+  const handleUpdateExperience = async (updatedExp) => {
+    try {
+      const response = await fetch(`${URL}/${updatedExp._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedExp),
+      });
+      const data = await response.json();
+      setExperiencias(experiencias.map(exp => exp._id === data._id ? data : exp));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (loading) return <p>Cargando experiencias...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="form-container">
-      <h2-form>Gestión de Experiencias</h2-form>
-      {loading && <p>Cargando experiencias...</p>}
-      {error && <p>Error: {error}</p>}
-      {!loading && !error && (
-        <>
-          <ExperienciaList experiencias={experiencias} onDeleteExperience={handleDeleteExperience} />
-          <ExperienciaForm onSubmit={handleExperienciaSubmit} />
-        </>
+    <div className={styles.experienciasPage}>
+      <h1>Experiencias</h1>
+      <button className={styles.btnAdd} onClick={() => setIsCreating(true)}>Añadir Nueva Experiencia</button>
+      {isCreating && (
+        <ExperienciaForm
+          onSave={handleExperienciaSubmit}
+          onCancel={() => setIsCreating(false)}
+        />
       )}
+      <ExperienciaList
+        experiencias={experiencias}
+        onDeleteExperience={handleDeleteExperience}
+        onUpdateExperience={handleUpdateExperience}
+      />
     </div>
   );
 }
