@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ExperienciaForm from './ExperienciaForm';
 import styles from './ExperienciaList.module.css'; // Importar el fitxer CSS Module
 
+// Component que mostra la llista d'experiències i permet editar-les
 export default function ExperienciaList({ experiencias = [], onDeleteExperience, onUpdateExperience }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,6 +10,7 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
   const [currentExp, setCurrentExp] = useState(null);
   const [users, setUsers] = useState([]);
 
+  // Obtenir la llista d'usuaris per mostrar els noms en lloc dels IDs
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -23,6 +25,7 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
     fetchUsers();
   }, []);
 
+  // Funció per obtenir el nom d'un usuari a partir del seu ID
   const getUserName = (userId) => {
     const user = users.find(user => user._id === userId);
     return user ? user.name : 'Desconocido';
@@ -31,17 +34,20 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
   if (loading) return <p>Cargando experiencias...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  // Funció per eliminar una experiència
   const handleDelete = (id) => {
     if (onDeleteExperience) {
       onDeleteExperience(id);
     }
   };
 
+  // Funció per iniciar l'edició d'una experiència
   const handleEditClick = (exp) => {
     setIsEditing(true);
     setCurrentExp(exp);
   };
 
+  // Funció per desar els canvis d'una experiència
   const handleSave = (updatedExp) => {
     if (onUpdateExperience) {
       onUpdateExperience(updatedExp);

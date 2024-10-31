@@ -3,6 +3,7 @@ import ExperienciaList from '../components/ExperienciaList';
 import ExperienciaForm from '../components/ExperienciaForm';
 import styles from './experiencias.module.css'; // Importar el fitxer CSS Module
 
+// Pàgina principal que mostra la llista d'experiències i permet afegir-ne de noves
 export default function Experiencias() {
   const [experiencias, setExperiencias] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,7 @@ export default function Experiencias() {
   const [isCreating, setIsCreating] = useState(false);
   const URL = "http://localhost:3000/api/experiencias";
 
+  // Obtenir la llista d'experiències des del servidor
   useEffect(() => {
     setLoading(true);
     const fetchExperiencias = async () => {
@@ -27,6 +29,7 @@ export default function Experiencias() {
     fetchExperiencias();
   }, []);
 
+  // Funció per crear una nova experiència
   const handleExperienciaSubmit = async (newExperiencia) => {
     try {
       const response = await fetch(URL, {
@@ -44,6 +47,7 @@ export default function Experiencias() {
     }
   };
 
+  // Funció per eliminar una experiència
   const handleDeleteExperience = async (id) => {
     try {
       await fetch(`${URL}/${id}`, {
@@ -55,6 +59,8 @@ export default function Experiencias() {
     }
   };
 
+
+  // Funció per actualitzar una experiència
   const handleUpdateExperience = async (updatedExp) => {
     try {
       const response = await fetch(`${URL}/${updatedExp._id}`, {

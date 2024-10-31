@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './ExperienciaForm.module.css'; // Importar el fitxer CSS Module
 
+// Component que mostra el formulari per crear o editar una experiència
 export default function ExperienciaForm({ experiencia, onSave, onCancel }) {
   const [description, setDescription] = useState(experiencia ? experiencia.description : '');
   const [owner, setOwner] = useState(experiencia ? experiencia.owner : '');
@@ -8,6 +9,7 @@ export default function ExperienciaForm({ experiencia, onSave, onCancel }) {
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
 
+  // Obtenir la llista d'usuaris per omplir els camps de selecció
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -23,6 +25,7 @@ export default function ExperienciaForm({ experiencia, onSave, onCancel }) {
     fetchUsers();
   }, []);
 
+  // Funció per gestionar l'enviament del formulari
   const handleSubmit = (e) => {
     e.preventDefault();
 
