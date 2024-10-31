@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ExperienciaForm from './ExperienciaForm';
+import EditExperienciaDetails from './EditExperienciaDetails'; // Importar el nou component
 import styles from './ExperienciaList.module.css'; // Importar el fitxer CSS Module
 
 // Component que mostra la llista d'experiències i permet editar-les
@@ -25,7 +25,7 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
     fetchUsers();
   }, []);
 
-  // Funció per obtenir el nom d'un usuari a partir del seu ID
+  // Funció per obtenir el nom de l'usuari a partir del seu ID
   const getUserName = (userId) => {
     const user = users.find(user => user._id === userId);
     return user ? user.name : 'Desconocido';
@@ -47,7 +47,7 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
     setCurrentExp(exp);
   };
 
-  // Funció per desar els canvis d'una experiència
+  // Funció per guardar els canvis d'una experiència editada
   const handleSave = (updatedExp) => {
     if (onUpdateExperience) {
       onUpdateExperience(updatedExp);
@@ -74,7 +74,7 @@ export default function ExperienciaList({ experiencias = [], onDeleteExperience,
       </ul>
 
       {isEditing && (
-        <ExperienciaForm
+        <EditExperienciaDetails
           experiencia={currentExp}
           onSave={handleSave}
           onCancel={() => setIsEditing(false)}

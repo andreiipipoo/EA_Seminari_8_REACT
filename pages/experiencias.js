@@ -59,7 +59,6 @@ export default function Experiencias() {
     }
   };
 
-
   // Funció per actualitzar una experiència
   const handleUpdateExperience = async (updatedExp) => {
     try {

@@ -1,0 +1,58 @@
+.editExperienciaDetails {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .editExperienciaDetails h2 {
+    margin-bottom: 15px;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .formGroup input, .formGroup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .btnSave, .btnCancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .btnSave {
+    background-color: #2ecc71;
+    color: #fff;
+    transition: background-color 0.3s;
+  }
+  
+  .btnSave:hover {
+    background-color: #27ae60;
+  }
+  
+  .btnCancel {
+    background-color: #e74c3c;
+    color: #fff;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .btnCancel:hover {
+    background-color: #c0392b;
+  }
